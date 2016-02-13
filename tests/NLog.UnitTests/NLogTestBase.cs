@@ -70,7 +70,7 @@ namespace NLog.UnitTests
         {
             Assert.Equal(msg, GetDebugLastMessage(targetName));
         }
-        
+
         protected void AssertDebugLastMessageContains(string targetName, string msg)
         {
             string debugLastMessage = GetDebugLastMessage(targetName);
@@ -266,11 +266,13 @@ namespace NLog.UnitTests
         {
             private readonly LogLevel globalThreshold;
             private readonly bool throwExceptions;
+            private bool? throwConfigExceptions;
 
             public InternalLoggerScope()
             {
                 this.globalThreshold = LogManager.GlobalThreshold;
                 this.throwExceptions = LogManager.ThrowExceptions;
+                this.throwConfigExceptions = LogManager.ThrowConfigExceptions;
             }
 
             public void Dispose()
@@ -279,8 +281,11 @@ namespace NLog.UnitTests
                     File.Delete(InternalLogger.LogFile);
 
                 InternalLogger.Reset();
+
+                //restore logmanager
                 LogManager.GlobalThreshold = this.globalThreshold;
                 LogManager.ThrowExceptions = this.throwExceptions;
+                LogManager.ThrowConfigExceptions = this.throwConfigExceptions;
             }
         }
     }
