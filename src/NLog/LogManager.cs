@@ -121,7 +121,7 @@ namespace NLog
         /// By default exceptions are not thrown under any circumstances.
         /// 
         /// </remarks>
-        public static bool ThrowConfigExceptions
+        public static bool? ThrowConfigExceptions
         {
             get { return factory.ThrowConfigExceptions; }
             set { factory.ThrowConfigExceptions = value; }
